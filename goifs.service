@@ -1,0 +1,10 @@
+[Unit]
+Description=Internet failover service
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+ExecStart=/usr/local/sbin/goifs start
+
+[Install]
+WantedBy=multi-user.target

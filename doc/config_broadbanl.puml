@@ -1,0 +1,46 @@
+@startuml
+left to right direction
+' Horizontal lines: -->, <--, <-->
+' Vertical lines: ->, <-, <->
+title Network with broadband
+
+cloud internet 
+
+map "**Broadband**" as modem1 {
+  Type => Broadband
+  Rank => 1
+  IP => 192.168.1.1
+}
+
+map "**4G**" as modem2 {
+  Type => 4G
+  Rank => 2
+  IP => 192.168.3.1
+}
+
+modem1 --> internet
+modem2 --> internet
+
+map "**Linux Router**" as router {
+  eth0 IP => 192.168.1.2/24
+  eth0 Gateway => 192.168.1.1
+  eth1 IP => 192.168.3.2/24
+  eth1 Gateway => 192.168.3.1
+  Default Route *--> modem1
+  eth0 *--> modem1
+  eth1 *--> modem2
+}
+
+map "**Desktop**" as d {
+  IP => 192.168.1.11/24
+  Gateway => 192.168.1.2
+  DefaultRoute *--> router
+}
+
+map "**Mobile**" as m {
+  IP => 192.168.1.21/24
+  Gateway => 192.168.1.2
+  DefaultRoute *--> router
+}
+
+@enduml

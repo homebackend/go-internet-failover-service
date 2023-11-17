@@ -1,0 +1,24 @@
+maxPacketLoss: 50
+minPacketLoss: 20
+minSuccessivePacketsRecvd: 20
+maxSuccessivePacketsLost: 10
+useSudo: true
+cleanIfRequired: true
+ping: 1.1.1.1
+connections:
+  - name: fiber
+    rank: 1
+    ip: 192.168.2.1
+    peerIp: 192.168.2.2
+    mask: 24
+    gwIf: eth0
+    gw: 192.168.1.2
+    mark: 101
+  - name: fourg
+    rank: 2
+    ip: 192.168.4.1
+    peerIp: 192.168.4.2
+    mask: 24
+    gwIf: eth1
+    gw: 192.168.3.1
+    mark: 102

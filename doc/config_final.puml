@@ -1,0 +1,79 @@
+@startuml
+left to right direction
+' Horizontal lines: -->, <--, <-->
+' Vertical lines: ->, <-, <->
+title Network with 4G
+
+cloud internet
+
+map modem1 {
+  IP => 192.168.1.1/24
+  Forward *--> internet
+}
+
+map modem2 {
+  IP => 192.168.3.1/24
+  Forward *--> internet
+}
+
+
+folder router {
+  component "Application" as cmd
+
+  folder "Global Network NS" {
+    map eth0 {
+        IP => 192.168.1.2/24
+        Gateway *--> modem1
+    }
+    map eth1 {
+        IP => 192.168.3.2/24
+        Gateway *--> modem2
+    }
+    folder "Routing Table" {
+      Map "Default" as rt {
+        Active Default Route *--> eth0
+      }
+      Map "Table 101" as rt101 {
+        Default Route *--> eth0
+      }
+      Map "Table 102" as rt102 {
+        Default Route *--> eth1
+      }
+    }
+    map fibera {
+        IP => 192.168.2.1/24
+        Forward *--> rt101
+    }
+    map fourga {
+        IP => 192.168.4.1/24
+        Forward *--> rt102
+    }
+  }
+  folder "Network NS fiber" as fiber {
+    component "Application" as cmdfiber
+  
+    map fiber.fiberb {
+        IP => 192.168.2.2/24
+        Peer *--> fibera
+    }
+  }
+  folder "Network NS fourg" as fourg {
+    component "Application" as cmdfourg
+
+    map fourg.fourgb {
+        IP => 192.168.4.2/24
+        Peer *--> fourga
+    }
+  }
+}
+
+Map "Desktop/Laptop/Mobile" as d {
+  IP => 192.168.1.*/24
+  Default Route *--> rt
+}
+
+cmd --> rt : iptables
+cmdfiber --> fiber.fiberb
+cmdfourg --> fourg.fourgb
+
+@enduml
