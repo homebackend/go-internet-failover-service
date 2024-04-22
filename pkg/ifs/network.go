@@ -6,6 +6,7 @@ import (
 	"net"
 	"os"
 	"strings"
+	"time"
 
 	selfcommon "github.com/homebackend/go-homebackend-common/pkg"
 )
@@ -23,6 +24,7 @@ func NetworkStart(sudo bool, clean bool, connection *Connection) {
 		if clean {
 			log.Printf("Performing namespace %s cleanup", connection.Name)
 			IpExecute(sudo, []string{"netns", "del", connection.Name})
+			time.Sleep(1 * time.Second)
 		} else {
 			os.Exit(1)
 		}
