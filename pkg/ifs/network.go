@@ -112,3 +112,8 @@ func Ping(sudo bool, ns string, pingIp string) bool {
 	code, _, _ := selfcommon.Execute(sudo, false, []string{"ip", "netns", "exec", ns, "ping", "-q", "-c", "1", pingIp})
 	return code == 0
 }
+
+func Curl(sudo bool, ns string, url string) bool {
+	code, _, _ := selfcommon.Execute(sudo, false, []string{"ip", "netns", "exec", ns, "curl", "-Is", url})
+	return code == 0
+}
