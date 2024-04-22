@@ -5,6 +5,8 @@ After=network-online.target
 
 [Service]
 ExecStart=/usr/local/sbin/goifs start
+Restart=always
+RestartSec=5s
 
 [Install]
 WantedBy=multi-user.target

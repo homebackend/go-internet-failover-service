@@ -24,11 +24,27 @@ func NewProcessor(config *Configuration) *Processor {
 	}
 }
 
+func (proc *Processor) _SetRoute() {
+	routeSet := false
+	for _, c := range proc.config.Connections {
+		if !routeSet && proc.processes[c.Name].IsUp() {
+			SetDefautRoute(proc.config.UseSudo, proc.config.Ping, c)
+			proc.processes[c.Name].info.Active = true
+			routeSet = true
+		} else {
+			proc.processes[c.Name].info.Active = false
+		}
+	}
+}
+
 func (proc *Processor) Start() {
 	go func() {
 		for _, p := range proc.processes {
 			p.Start()
 		}
+
+		ticker := time.NewTicker(60000 * time.Millisecond)
+		defer ticker.Stop()
 
 		for {
 			select {
@@ -36,16 +52,9 @@ func (proc *Processor) Start() {
 				proc.quit = nil
 				return
 			case <-proc.notifier:
-				routeSet := false
-				for _, c := range proc.config.Connections {
-					if !routeSet && proc.processes[c.Name].IsUp() {
-						SetDefautRoute(proc.config.UseSudo, proc.config.Ping, c)
-						proc.processes[c.Name].info.Active = true
-						routeSet = true
-					} else {
-						proc.processes[c.Name].info.Active = false
-					}
-				}
+				proc._SetRoute()
+			case <-ticker.C:
+				proc._SetRoute()
 			default:
 				time.Sleep(100 * time.Millisecond)
 			}
