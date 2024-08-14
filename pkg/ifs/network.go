@@ -24,6 +24,11 @@ func NetworkStart(sudo bool, clean bool, connection *Connection) {
 		if clean {
 			log.Printf("Performing namespace %s cleanup", connection.Name)
 			IpExecute(sudo, []string{"netns", "del", connection.Name})
+			_, out, _ := IpExecute(sudo, []string{"link"})
+			if strings.Contains(out, ifName) {
+				log.Printf("Performing link %s cleanup", ifName)
+				IpExecute(sudo, []string{"link", "del", ifName})
+			}
 			time.Sleep(1 * time.Second)
 		} else {
 			os.Exit(1)

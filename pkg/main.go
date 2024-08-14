@@ -29,7 +29,7 @@ const (
 
 func service(c *string, t *bool, n *bool) {
 	homecommon.CheckPrerequisites(homecommon.O_LINUX, *c, requiredCommands)
-	pidFile := homecommon.CreatePidFile()
+	pidFile := homecommon.CreatePidFile(PROG_NAME)
 
 	config := homecommon.GetConf[ifs.Configuration](*c)
 	sort.Slice(config.Connections, func(i, j int) bool {

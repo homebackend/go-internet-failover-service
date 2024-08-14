@@ -19,5 +19,6 @@ type Configuration struct {
 	UseSudo                   bool          `yaml:"useSudo" default:"false"`
 	CleanIfRequired           bool          `yaml:"cleanIfRequired" default:"true"`
 	Ping                      string        `yaml:"ping" default:"1.1.1.1" validate:"required,ip_addr"`
+	CurlUrl                   string        `yaml:"curlUrl" default:"http://google.com/"`
 	Connections               []*Connection `yaml:"connections" validate:"required,dive"`
 }

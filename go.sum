@@ -17,6 +17,8 @@ github.com/homebackend/go-homebackend-common v0.0.0-20231115154134-d7e4e329ad45 
 github.com/homebackend/go-homebackend-common v0.0.0-20231115154134-d7e4e329ad45/go.mod h1:URcU1vebZS3laMHyd63rbCFKaqSypeLSy7elh4v9qMk=
 github.com/homebackend/go-homebackend-common v0.0.0-20231117105846-e72d04db4335 h1:GfL9jFuSpEjklpjfOVnTGQyD3Nd2VbF4ecik0biaFG4=
 github.com/homebackend/go-homebackend-common v0.0.0-20231117105846-e72d04db4335/go.mod h1:URcU1vebZS3laMHyd63rbCFKaqSypeLSy7elh4v9qMk=
+github.com/homebackend/go-homebackend-common v0.1.0 h1:FBz1QIik+ZLDmWtT7vYrDwsVDfDkSkn6VZwEBB3gObo=
+github.com/homebackend/go-homebackend-common v0.1.0/go.mod h1:URcU1vebZS3laMHyd63rbCFKaqSypeLSy7elh4v9qMk=
 github.com/juju/fslock v0.0.0-20160525022230-4d5c94c67b4b h1:FQ7+9fxhyp82ks9vAuyPzG0/vVbWwMwLJ+P6yJI5FN8=
 github.com/juju/fslock v0.0.0-20160525022230-4d5c94c67b4b/go.mod h1:HMcgvsgd0Fjj4XXDkbjdmlbI505rUPBs6WBMYg2pXks=
 github.com/leodido/go-urn v1.2.4 h1:XlAE/cm/ms7TE/VMVoduSpNBoyc2dOxHs5MZSwAN63Q=

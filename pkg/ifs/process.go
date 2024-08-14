@@ -53,7 +53,7 @@ func (p *Process) Start() {
 					curl_count = 100
 					p.info.UpdateSuccess()
 				} else {
-					result = Curl(false, p.name, "http://googe.com/")
+					result = Curl(false, p.name, p.config.CurlUrl)
 					if result {
 						p.info.UpdateSuccess()
 						if ping_fail_curl_success == 3 {
