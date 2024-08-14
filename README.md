@@ -1,3 +1,10 @@
+[![Contributors][contributors-shield]][contributors-url]
+[![Forks][forks-shield]][forks-url]
+[![Stargazers][stars-shield]][stars-url]
+[![Issues][issues-shield]][issues-url]
+[![MIT License][license-shield]][license-url]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+
 # go-internet-failover
 
 go-internet-failover service (referred as `IFS` elsewhere in this document) is internet failover service. It allows automatic switching of internet connections in case of failure of any of the internet connections. The end user ranks the various internet connections based on their preferences, and IFS ensures that the highest ranked working internet connection gets configured, and ready for use. Note it is not a load balancing service as that is not its intent. Further, it works with **IPv4** only.
@@ -335,3 +342,19 @@ With this we are all set.
 #### How does it work
 
 The `IFS` service keeps pinging configured `Ping` IP using each of the connections periodically to determine if the connection is up. To ping from within the network execute the command: `ip netns exec <namespace> ping -c 1 <ip>`. If the status of a connection changes, the default routes in global namespace are modified to reflect best connection available.
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[contributors-shield]: https://img.shields.io/github/contributors/homebackend/go-internet-failover-service.svg?style=for-the-badge
+[contributors-url]: https://github.com/homebackend/go-internet-failover-service/graphs/contributors
+[forks-shield]: https://img.shields.io/github/forks/homebackend/go-internet-failover-service.svg?style=for-the-badge
+[forks-url]: https://github.com/homebackend/go-internet-failover-service/network/members
+[stars-shield]: https://img.shields.io/github/stars/homebackend/go-internet-failover-service.svg?style=for-the-badge
+[stars-url]: https://github.com/homebackend/go-internet-failover-service/stargazers
+[issues-shield]: https://img.shields.io/github/issues/homebackend/go-internet-failover-service.svg?style=for-the-badge
+[issues-url]: https://github.com/homebackend/go-internet-failover-service/issues
+[license-shield]: https://img.shields.io/github/license/homebackend/go-internet-failover-service.svg?style=for-the-badge
+[license-url]: https://github.com/homebackend/go-internet-failover-service/blob/master/LICENSE
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://linkedin.com/in/neeraj-jakhar-39686212b
