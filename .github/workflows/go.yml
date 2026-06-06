@@ -1,26 +1,58 @@
-# This workflow will build a golang project
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-go
-
-name: Go
+name: Build and Release CI/CD
 
 on:
   push:
-    branches: [ "main" ]
+    branches:
+      - main
+    paths:
+      - 'debian.control'
   pull_request:
-    branches: [ "main" ]
+    branches:
+      - main
+  workflow_dispatch:
 
 jobs:
-
   build:
-    runs-on: ubuntu-24.04
+    name: Build and Package
+    runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set up Go
-      uses: actions/setup-go@v4
-      with:
-        go-version: '1.21.4'
+      - name: Setup Go Toolchain
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: 'go.mod'
+          cache: true
 
-    - name: Build
-      run: go build -o ./bin/goifs pkg/main.go
-      
+      - name: Build Executable Binary
+        run: make build
+
+      - name: Build Debian Package
+        run: make debian
+
+      - name: Extract Release Version
+        id: extract_version
+        run: |
+          # Extract version from debian.control (ignoring spaces around the colon)
+          VERSION=$(grep -i '^Version:' debian.control | awk '{print $2}')
+          echo "Extracted Version: $VERSION"
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+
+      - name: Create and Upload Release Assets
+        if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v${{ steps.extract_version.outputs.version }}
+          name: Release v${{ steps.extract_version.outputs.version }}
+          body: |
+            Automated production release for version ${{ steps.extract_version.outputs.version }}.
+            
+            ### Artifacts Included
+            * Binary Executable: `bin/goifs`
+            * Debian Package: `build/debian/goifs`
+          draft: false
+          prerelease: false
+          files: |
+            bin/goifs
+            build/debian/goifs
